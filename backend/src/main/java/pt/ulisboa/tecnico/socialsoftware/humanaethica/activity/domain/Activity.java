@@ -346,4 +346,8 @@ public class Activity {
             throw new HEException(ACTIVITY_ALREADY_EXISTS);
         }
     }
+
+    public Integer getNumberOfEnrollments() {
+        return this.enrollments.size();
+    }
 }
