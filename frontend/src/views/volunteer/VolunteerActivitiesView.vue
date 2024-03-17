@@ -46,6 +46,7 @@
                 class="mr-2 action-button"
                 color="blue"
                 v-on="on"
+                @click="createEnrollment(item)"
                 data-cy="applyButton"
                 >login</v-icon
               >
@@ -54,6 +55,13 @@
           </v-tooltip>
         </template>
       </v-data-table>
+      <enrollment-dialog
+        v-if="currentActivity && enrollmentDialog"
+        v-model="enrollmentDialog"
+        :activityId="currentActivity.id"
+        v-on:save-enrollment="onSaveEnrollment"
+        v-on:close-enrollment-dialog="onCloseEnrollmentDialog"
+      />
     </v-card>
   </div>
 </template>
@@ -63,13 +71,21 @@ import { Component, Vue } from 'vue-property-decorator';
 import RemoteServices from '@/services/RemoteServices';
 import Activity from '@/models/activity/Activity';
 import { show } from 'cli-cursor';
+import EnrollmentDialog from '@/views/volunteer/EnrollmentDialog.vue';
 
 @Component({
   methods: { show },
+  components: {
+    'enrollment-dialog': EnrollmentDialog,
+  },
 })
 export default class VolunteerActivitiesView extends Vue {
   activities: Activity[] = [];
   search: string = '';
+
+  enrollmentDialog: boolean = false;
+  currentActivity: Activity | null = null;
+
   headers: object = [
     {
       text: 'Name',
@@ -157,6 +173,21 @@ export default class VolunteerActivitiesView extends Vue {
         await this.$store.dispatch('error', error);
       }
     }
+  }
+
+  createEnrollment(activity: Activity) {
+    this.currentActivity = activity;
+    this.enrollmentDialog = true;
+  }
+
+  onSaveEnrollment() {
+    this.enrollmentDialog = false;
+    this.currentActivity = null;
+  }
+
+  onCloseEnrollmentDialog() {
+    this.enrollmentDialog = false;
+    this.currentActivity = null;
   }
 }
 </script>
