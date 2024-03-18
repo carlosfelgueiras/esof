@@ -72,6 +72,7 @@ import RemoteServices from '@/services/RemoteServices';
 import Activity from '@/models/activity/Activity';
 import { show } from 'cli-cursor';
 import EnrollmentDialog from '@/views/volunteer/EnrollmentDialog.vue';
+import Enrollment from '@/models/enrollment/Enrollment';
 
 @Component({
   methods: { show },
@@ -85,6 +86,8 @@ export default class VolunteerActivitiesView extends Vue {
 
   enrollmentDialog: boolean = false;
   currentActivity: Activity | null = null;
+
+  enrollments: Enrollment[] = [];
 
   headers: object = [
     {
@@ -154,6 +157,11 @@ export default class VolunteerActivitiesView extends Vue {
     await this.$store.dispatch('loading');
     try {
       this.activities = await RemoteServices.getActivities();
+    } catch (error) {
+      await this.$store.dispatch('error', error);
+    }
+    try {
+      this.enrollments = await RemoteServices.getVolunteerEnrollment();
     } catch (error) {
       await this.$store.dispatch('error', error);
     }
