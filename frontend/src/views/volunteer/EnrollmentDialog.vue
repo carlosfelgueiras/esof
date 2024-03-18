@@ -45,6 +45,7 @@
 <script lang="ts">
 import { Vue, Component, Prop, Model } from 'vue-property-decorator';
 import Enrollment from '@/models/enrollment/Enrollment';
+import RemoteServices from '@/services/RemoteServices';
 
 @Component({})
 export default class EnrollmentDialog extends Vue {
@@ -54,8 +55,17 @@ export default class EnrollmentDialog extends Vue {
   enrollment: Enrollment = new Enrollment();
 
   async onSaveEnrollment() {
-    //TODO: implement
-    this.$emit('save-enrollment');
+    if ((this.$refs.form as Vue & { validate: () => boolean }).validate()) {
+      try {
+        const result = await RemoteServices.createEnrollment(
+          this.activityId,
+          this.enrollment,
+        );
+        this.$emit('save-enrollment', result);
+      } catch (error) {
+        await this.$store.dispatch('error', error);
+      }
+    }
   }
 
   get isMotivationValid() {

@@ -188,7 +188,8 @@ export default class VolunteerActivitiesView extends Vue {
     this.enrollmentDialog = true;
   }
 
-  onSaveEnrollment() {
+  onSaveEnrollment(enrollment: Enrollment) {
+    this.enrollments.unshift(enrollment);
     this.enrollmentDialog = false;
     this.currentActivity = null;
   }
