@@ -40,7 +40,7 @@
             </template>
             <span>Report Activity</span>
           </v-tooltip>
-          <v-tooltip bottom>
+          <v-tooltip v-if="canEnroll(item)" bottom>
             <template v-slot:activator="{ on }">
               <v-icon
                 class="mr-2 action-button"
@@ -209,6 +209,14 @@ export default class VolunteerActivitiesView extends Vue {
   onCloseEnrollmentDialog() {
     this.enrollmentDialog = false;
     this.currentActivity = null;
+  }
+
+  canEnroll(activity: Activity | null) {
+    return (
+      activity &&
+      new Date(activity.applicationDeadline) > new Date() &&
+      !this.enrollments.some((e: Enrollment) => e.activityId === activity.id)
+    );
   }
 }
 </script>
