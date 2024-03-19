@@ -7,6 +7,7 @@ import pt.ulisboa.tecnico.socialsoftware.humanaethica.exceptions.HEException;
 import pt.ulisboa.tecnico.socialsoftware.humanaethica.institution.domain.Institution;
 import pt.ulisboa.tecnico.socialsoftware.humanaethica.participation.domain.Participation;
 import pt.ulisboa.tecnico.socialsoftware.humanaethica.theme.domain.Theme;
+import pt.ulisboa.tecnico.socialsoftware.humanaethica.user.domain.Volunteer;
 import pt.ulisboa.tecnico.socialsoftware.humanaethica.utils.DateHandler;
 
 import java.time.LocalDateTime;
@@ -261,6 +262,11 @@ public class Activity {
 
     public Institution getInstitution() {
         return institution;
+    }
+
+    public boolean isVolunteerParticipating(Volunteer volunteer) {
+        return this.participations.stream()
+                .anyMatch(participation -> participation.getVolunteer().getId() == volunteer.getId());
     }
 
     private void verifyInvariants() {
