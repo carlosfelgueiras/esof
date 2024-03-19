@@ -100,4 +100,8 @@ public class Enrollment {
             throw new HEException(ENROLLMENT_AFTER_DEADLINE);
         }
     }
+
+    public String getVolunteerName() {
+        return this.volunteer.getName();
+    }
 }
