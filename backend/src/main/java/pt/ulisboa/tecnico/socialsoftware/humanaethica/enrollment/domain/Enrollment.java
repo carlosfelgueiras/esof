@@ -76,6 +76,10 @@ public class Enrollment {
         this.volunteer.addEnrollment(this);
     }
 
+    public boolean isParticipating() {
+        return this.activity.isVolunteerParticipating(this.volunteer);
+    }
+
     private void verifyInvariants() {
         motivationIsRequired();
         enrollOnce();
