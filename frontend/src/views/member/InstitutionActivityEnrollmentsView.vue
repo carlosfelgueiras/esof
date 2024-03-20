@@ -46,6 +46,12 @@ export default class InstitutionActivityEnrollmentsView extends Vue {
 
   headers: object = [
     {
+      text: 'VolunteerName',
+      value: 'volunteerName',
+      align: 'left',
+      width: '5%',
+    },
+    {
       text: 'Motivation',
       value: 'motivation',
       align: 'left',
