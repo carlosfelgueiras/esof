@@ -53,7 +53,7 @@
             </template>
             <span>Apply for Activity</span>
           </v-tooltip>
-          <v-tooltip bottom>
+          <v-tooltip  v-if="canReview(item)" bottom>
             <template v-slot:activator="{ on }">
               <v-icon
                 class="mr-2 action-button"
@@ -232,6 +232,15 @@ export default class VolunteerActivitiesView extends Vue {
       activity &&
       new Date(activity.applicationDeadline) > new Date() &&
       !this.enrollments.some((e: Enrollment) => e.activityId === activity.id)
+    );
+  }
+
+  canReview(activity: Activity | null) {
+    return (
+      activity &&
+      new Date(activity.endingDate) < new Date() &&
+      !this.assessments.some((a: Assessment) => a.institutionId === activity.institution.id) &&
+      this.participations.some((p: Participation) => p.activityId === activity.id)
     );
   }
 }
