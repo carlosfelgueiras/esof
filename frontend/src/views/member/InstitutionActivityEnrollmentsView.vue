@@ -28,6 +28,20 @@
           >
         </v-card-title>
       </template>
+      <template v-slot:[`item.action`]="{ item }">
+        <v-tooltip bottom>
+          <template v-slot:activator="{ on }">
+            <v-icon
+              class="mr-2 action-button"
+              color="blue"
+              v-on="on"
+              data-cy="participateButton"
+              >login</v-icon
+            >
+          </template>
+          <span>Select Participant</span>
+        </v-tooltip>
+      </template>
     </v-data-table>
   </v-card>
 </template>
@@ -61,6 +75,13 @@ export default class InstitutionActivityEnrollmentsView extends Vue {
       text: 'Application Date',
       value: 'enrollmentDateTime',
       align: 'left',
+      width: '5%',
+    },
+    {
+      text: 'Actions',
+      value: 'action',
+      align: 'left',
+      sortable: false,
       width: '5%',
     },
   ];
