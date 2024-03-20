@@ -85,6 +85,8 @@ import Activity from '@/models/activity/Activity';
 import { show } from 'cli-cursor';
 import EnrollmentDialog from '@/views/volunteer/EnrollmentDialog.vue';
 import Enrollment from '@/models/enrollment/Enrollment';
+import Participation from '@/models/participation/Participation';
+import Assessment from '@/models/assessment/Assessment';
 
 @Component({
   methods: { show },
@@ -100,6 +102,10 @@ export default class VolunteerActivitiesView extends Vue {
   currentActivity: Activity | null = null;
 
   enrollments: Enrollment[] = [];
+
+  participations: Participation[] = [];
+
+  assessments: Assessment[] = [];
 
   headers: object = [
     {
@@ -174,6 +180,16 @@ export default class VolunteerActivitiesView extends Vue {
     }
     try {
       this.enrollments = await RemoteServices.getVolunteerEnrollment();
+    } catch (error) {
+      await this.$store.dispatch('error', error);
+    }
+    try {
+      this.participations = await RemoteServices.getVolunteerParticipations();
+    } catch (error) {
+      await this.$store.dispatch('error', error);
+    }
+    try {
+      this.assessments = await RemoteServices.getVolunteerAssessments();
     } catch (error) {
       await this.$store.dispatch('error', error);
     }
