@@ -33,10 +33,10 @@
           <template v-slot:activator="{ on }">
             <v-icon
               class="mr-2 action-button"
-              color="blue"
+              color="primary"
               v-on="on"
               data-cy="participateButton"
-              >login</v-icon
+              >mdi-check</v-icon
             >
           </template>
           <span>Select Participant</span>
