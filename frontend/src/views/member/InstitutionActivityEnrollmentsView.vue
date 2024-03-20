@@ -28,7 +28,7 @@
           >
         </v-card-title>
       </template>
-      <template v-slot:[`item.action`]="{ item }">
+      <template v-slot:[`item.action`]="{}">
         <v-tooltip bottom>
           <template v-slot:activator="{ on }">
             <v-icon
