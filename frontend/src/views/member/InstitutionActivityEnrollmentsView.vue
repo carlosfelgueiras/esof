@@ -72,6 +72,12 @@ export default class InstitutionActivityEnrollmentsView extends Vue {
       width: '50%',
     },
     {
+      text: 'Participating',
+      value: 'isParticipating',
+      align: 'left',
+      width: '5%',
+    },
+    {
       text: 'Application Date',
       value: 'enrollmentDateTime',
       align: 'left',
