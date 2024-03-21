@@ -28,13 +28,14 @@
           >
         </v-card-title>
       </template>
-      <template v-slot:[`item.action`]="{}">
+      <template v-slot:[`item.action`]="{ item }">
         <v-tooltip bottom>
           <template v-slot:activator="{ on }">
             <v-icon
               class="mr-2 action-button"
               color="primary"
               v-on="on"
+              @click="createParticipation(item)"
               data-cy="participateButton"
               >mdi-check</v-icon
             >
@@ -43,6 +44,13 @@
         </v-tooltip>
       </template>
     </v-data-table>
+    <participation-dialog
+      v-if="currentActivity && participationDialog"
+      v-model="participationDialog"
+      :activityId="currentActivity.id"
+      v-on:save-participation="onSaveParticipation"
+      v-on:close-participation-dialog="onCloseParticipationDialog"
+    />
   </v-card>
 </template>
 
@@ -51,12 +59,20 @@ import { Component, Vue } from 'vue-property-decorator';
 import RemoteServices from '@/services/RemoteServices';
 import Activity from '@/models/activity/Activity';
 import Enrollment from '@/models/enrollment/Enrollment';
+import ParticipationDialog from '@/views/member/ParticipationDialog.vue';
 
-@Component({})
+@Component({
+  components: {
+    'participation-dialog': ParticipationDialog,
+  },
+})
 export default class InstitutionActivityEnrollmentsView extends Vue {
   activity!: Activity;
   enrollments: Enrollment[] = [];
   search: string = '';
+
+  participationDialog: boolean = false;
+  currentActivity: Activity | null = null;
 
   headers: object = [
     {
@@ -110,6 +126,21 @@ export default class InstitutionActivityEnrollmentsView extends Vue {
   async getActivities() {
     await this.$store.dispatch('setActivity', null);
     this.$router.push({ name: 'institution-activities' }).catch(() => {});
+  }
+
+  createParticipation(activity: Activity) {
+    this.currentActivity = activity;
+    this.participationDialog = true;
+  }
+
+  onSaveParticipation() {
+    this.participationDialog = false;
+    this.currentActivity = null;
+  }
+
+  onCloseParticipationDialog() {
+    this.participationDialog = false;
+    this.currentActivity = null;
   }
 }
 </script>
