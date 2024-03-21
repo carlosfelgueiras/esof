@@ -8,12 +8,13 @@ public class EnrollmentDto {
     private String motivation;
 
     private String enrollmentDateTime;
-    private boolean isParticipating;
-
+    
     private Integer activityId;
-
+    
     private String volunteerName;
-
+    
+    private boolean isParticipating;
+    
     public EnrollmentDto() {}
 
     public EnrollmentDto(Enrollment enrollment) {
@@ -65,11 +66,11 @@ public class EnrollmentDto {
         this.volunteerName = volunteerName;
     } 
 
-    public boolean isParticipating() {
+    public boolean getIsParticipating() {
         return this.isParticipating;
     }
 
-    public void setParticipationStatus(boolean isParticipating) {
+    public void setIsParticipating(boolean isParticipating) {
         this.isParticipating = isParticipating;
     }
 }
