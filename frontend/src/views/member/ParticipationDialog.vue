@@ -2,7 +2,7 @@
     <v-dialog v-model="dialog" persistent width="600">
       <v-card>
         <v-card-title>
-          <span class="headline"> New Rating </span>
+          <span class="headline"> Select Participant </span>
         </v-card-title>
         <v-card-text>
           <v-form ref="form" lazy-validation>
@@ -32,7 +32,7 @@
             data-cy="saveParticipation"
             @click="onSaveParticipation"
           >
-            Save
+            Make Participant
           </v-btn>
         </v-card-actions>
       </v-card>
