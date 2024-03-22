@@ -356,4 +356,8 @@ public class Activity {
     public Integer getNumberOfEnrollments() {
         return this.enrollments.size();
     }
+
+    public Integer getNumberOfParticipations() {
+        return this.participations.size();
+    }
 }
