@@ -9,10 +9,8 @@
             <v-row>
               <v-col cols="12">
                 <v-text-field
-                  label="*Rating"
-                  :rules="[(v) => !!v || 'A Rating is required']"
+                  label="Rating"
                   v-model="participation.rating"
-                  required
                   data-cy="ratingInput"
                 ></v-text-field>
               </v-col>
