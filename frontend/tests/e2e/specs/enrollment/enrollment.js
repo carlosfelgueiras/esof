@@ -12,6 +12,28 @@ describe('Enrollment', () => {
     it('create enrollment', () => {
         const ENROLLMENT_MOTIVATION = "I want to help people";
 
+        cy.demoMemberLogin()
+
+        // intercept get institutions
+        cy.intercept('GET', '/users/*/getInstitution').as('getInstitutions');
+        cy.intercept('GET', '/themes/availableThemes').as('availableThemes');
+        
+        cy.get('[data-cy="institution"]').click();
+
+        cy.get('[data-cy="activities"]').click();
+        cy.wait('@getInstitutions');
+        cy.wait('@availableThemes');
+
+        cy.get('[data-cy="memberActivitiesTable"] tbody tr')
+            .should('have.length', 3)
+            .eq(0)
+            .children()
+            .should('have.length', 12)
+            .eq(3)
+            .should('contain', 0)
+        
+        cy.logout();
+
         cy.demoVolunteerLogin()
 
         cy.intercept('POST', '/activities/*/enrollments').as('createEnrollment');
@@ -40,6 +62,45 @@ describe('Enrollment', () => {
 
         cy.wait('@createEnrollment');
 
+        cy.logout();
+
+        cy.demoMemberLogin()
+
+        cy.intercept('GET', '/activities/*/enrollments').as('getEnrollments');
+
+        cy.get('[data-cy="institution"]').click();
+
+        cy.get('[data-cy="activities"]').click();
+        cy.wait('@getInstitutions');
+        cy.wait('@availableThemes');
+
+        cy.get('[data-cy="memberActivitiesTable"] tbody tr')
+            .should('have.length', 3)
+            .eq(0)
+            .children()
+            .should('have.length', 12)
+            .eq(3)
+            .should('contain', 1);
+
+        cy.get('[data-cy="memberActivitiesTable"] tbody tr')
+            .should('have.length', 3)
+            .eq(0)
+            .children()
+            .should('have.length', 12)
+            .eq(11)
+            .find('[data-cy="showEnrollments"]')
+            .click();
+            
+        cy.wait('@getEnrollments');
+
+        cy.get('[data-cy="activityEnrollmentsTable"] tbody tr')
+            .should('have.length', 1)
+            .eq(0)
+            .children()
+            .should('have.length', 5)
+            .eq(1)
+            .should('contain', ENROLLMENT_MOTIVATION);
+        
         cy.logout();
     });
 });
