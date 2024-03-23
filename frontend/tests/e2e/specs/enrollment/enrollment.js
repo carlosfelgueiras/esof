@@ -28,7 +28,7 @@ describe('Enrollment', () => {
             .should('have.length', 3)
             .eq(0)
             .children()
-            .should('have.length', 12)
+            .should('have.length', 13)
             .eq(3)
             .should('contain', 0)
         
@@ -78,7 +78,7 @@ describe('Enrollment', () => {
             .should('have.length', 3)
             .eq(0)
             .children()
-            .should('have.length', 12)
+            .should('have.length', 13)
             .eq(3)
             .should('contain', 1);
 
@@ -86,8 +86,8 @@ describe('Enrollment', () => {
             .should('have.length', 3)
             .eq(0)
             .children()
-            .should('have.length', 12)
-            .eq(11)
+            .should('have.length', 13)
+            .eq(12)
             .find('[data-cy="showEnrollments"]')
             .click();
             
