@@ -58,6 +58,7 @@
               <v-icon
                 class="mr-2 action-button"
                 color="blue"
+                @click="createAssessment(item)"
                 v-on="on"
                 data-cy="writeAssessmentButton"
                 >fa-solid fa-pen-to-square</v-icon
@@ -74,6 +75,13 @@
         v-on:save-enrollment="onSaveEnrollment"
         v-on:close-enrollment-dialog="onCloseEnrollmentDialog"
       />
+      <assessment-dialog
+        v-if="currentActivity && assessmentDialog"
+        v-model="assessmentDialog"
+        :activityId="currentActivity.id"
+        v-on:save-assessment="onSaveAssessment"
+        v-on:close-assessment-dialog="onCloseAssessmentDialog"
+      />
     </v-card>
   </div>
 </template>
@@ -84,6 +92,7 @@ import RemoteServices from '@/services/RemoteServices';
 import Activity from '@/models/activity/Activity';
 import { show } from 'cli-cursor';
 import EnrollmentDialog from '@/views/volunteer/EnrollmentDialog.vue';
+import AssessmentDialog from '@/views/volunteer/AssessmentDialog.vue';
 import Enrollment from '@/models/enrollment/Enrollment';
 import Participation from '@/models/participation/Participation';
 import Assessment from '@/models/assessment/Assessment';
@@ -92,6 +101,7 @@ import Assessment from '@/models/assessment/Assessment';
   methods: { show },
   components: {
     'enrollment-dialog': EnrollmentDialog,
+    'assessment-dialog': AssessmentDialog,
   },
 })
 export default class VolunteerActivitiesView extends Vue {
@@ -99,6 +109,7 @@ export default class VolunteerActivitiesView extends Vue {
   search: string = '';
 
   enrollmentDialog: boolean = false;
+  assessmentDialog: boolean = false;
   currentActivity: Activity | null = null;
 
   enrollments: Enrollment[] = [];
@@ -233,6 +244,21 @@ export default class VolunteerActivitiesView extends Vue {
       new Date(activity.applicationDeadline) > new Date() &&
       !this.enrollments.some((e: Enrollment) => e.activityId === activity.id)
     );
+  }
+
+  createAssessment(activity: Activity) {
+    this.currentActivity = activity;
+    this.assessmentDialog = true;
+  }
+
+  onSaveAssessment() {
+    this.assessmentDialog = false;
+    this.currentActivity = null;
+  }
+
+  onCloseAssessmentDialog() {
+    this.assessmentDialog = false;
+    this.currentActivity = null;
   }
 
   canReview(activity: Activity | null) {
