@@ -48,7 +48,7 @@
                 v-on="on"
                 @click="createEnrollment(item)"
                 data-cy="applyButton"
-                >login</v-icon
+                >fa-solid fa-right-to-bracket</v-icon
               >
             </template>
             <span>Apply for Activity</span>
