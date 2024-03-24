@@ -29,6 +29,7 @@
           Close
         </v-btn>
         <v-btn
+          v-if="isReviewValid"
           color="blue-darken-1"
           variant="text"
           data-cy="saveAssessment"
@@ -55,6 +56,11 @@ export default class AssessmentDialog extends Vue {
   async onSaveAssessment() {
     //TODO: implement
     this.$emit('save-assessment');
+  }
+
+  get isReviewValid() {
+    if (this.assessment.review === undefined) return false;
+    return this.assessment.review.trim().length >= 10;
   }
 }
 </script>
