@@ -52,8 +52,17 @@ export default class ParticipationDialog extends Vue {
   participation: Participation = new Participation();
 
   async onSaveParticipation() {
-    //TODO: implement
-    this.$emit('save-participation');
+    if ((this.$refs.form as Vue & { validate: () => boolean }).validate()) {
+      try {
+        const result = await RemoteServices.createParticipation(
+          this.activityId,
+          this.participation,
+        );
+        this.$emit('save-participation', result);
+      } catch (error) {
+        await this.$store.dispatch('error', error);
+      }
+    }
   }
 }
 </script>
