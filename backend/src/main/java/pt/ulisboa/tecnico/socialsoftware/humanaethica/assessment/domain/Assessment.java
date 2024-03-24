@@ -76,6 +76,10 @@ public class Assessment {
         this.volunteer.addAssessment(this);
     }
 
+    public String getVolunteerName() {
+        return this.volunteer.getName();
+    }
+
     private void verifyInvariants() {
         reviewIsRequired();
         assessOnlyOnce();
