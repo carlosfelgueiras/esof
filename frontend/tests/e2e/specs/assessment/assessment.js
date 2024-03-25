@@ -51,5 +51,27 @@ describe('Assessment', () => {
 
         cy.logout();
 
+        cy.demoMemberLogin()
+
+        cy.intercept('GET', '/users/*/getInstitution').as('getInstitution');
+        cy.intercept('GET', '/institutions/*/assessments').as('getInstitutionAssestments');
+
+        cy.get('[data-cy="institution"]').click();
+        cy.get('[data-cy="assessments"]').click();
+
+        cy.wait('@getInstitution');
+        cy.wait('@getInstitutionAssestments');
+
+        cy.get('[data-cy="institutionAssessmentsTable"] tbody tr')
+            // Verify that the table of institution assessments has 1 instance
+            .should('have.length', 1)
+            .eq(0)
+            .children()
+            .eq(0)
+            // Verify that the first assessment of the table has the review
+            .should('contain', ASSESSMENT_REVIEW);
+
+        cy.logout();
+
     });
 });
