@@ -10,6 +10,11 @@
             <v-col cols="12">
               <v-text-field
                 label="Rating"
+                :rules="[
+                  (v) =>
+                    isRatingValid(v) ||
+                    'Rating must be a number between 1 and 5',
+                ]"
                 v-model="participation.rating"
                 data-cy="ratingInput"
               ></v-text-field>
@@ -63,6 +68,13 @@ export default class ParticipationDialog extends Vue {
         await this.$store.dispatch('error', error);
       }
     }
+  }
+
+  isRatingValid(value: any) {
+    if (value == null || value.length == 0) return true;
+    if (!/^\d+$/.test(value)) return false;
+    const parsedValue = parseInt(value);
+    return parsedValue >= 1 && parsedValue <= 5;
   }
 }
 </script>
