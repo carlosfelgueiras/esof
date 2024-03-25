@@ -45,17 +45,27 @@
 <script lang="ts">
 import { Vue, Component, Prop, Model } from 'vue-property-decorator';
 import Assessment from '@/models/assessment/Assessment';
+import RemoteServices from '@/services/RemoteServices';
 
 @Component({})
 export default class AssessmentDialog extends Vue {
   @Model('dialog', { type: Boolean }) dialog!: boolean;
-  @Prop({ type: Number, required: true }) readonly activityId!: number;
+  @Prop({ type: Number, required: true }) readonly institutionId!: number;
 
   assessment: Assessment = new Assessment();
 
   async onSaveAssessment() {
-    //TODO: implement
-    this.$emit('save-assessment');
+    if ((this.$refs.form as Vue & { validate: () => boolean }).validate()) {
+      try {
+        const result = await RemoteServices.createAssessment(
+          this.institutionId,
+          this.assessment,
+        );
+        this.$emit('save-assessment', result);
+      } catch (error) {
+        await this.$store.dispatch('error', error);
+      }
+    }
   }
 
   get isReviewValid() {

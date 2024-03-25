@@ -78,7 +78,7 @@
       <assessment-dialog
         v-if="currentActivity && assessmentDialog"
         v-model="assessmentDialog"
-        :activityId="currentActivity.id"
+        :institutionId="currentActivity.institution.id"
         v-on:save-assessment="onSaveAssessment"
         v-on:close-assessment-dialog="onCloseAssessmentDialog"
       />
@@ -251,7 +251,8 @@ export default class VolunteerActivitiesView extends Vue {
     this.assessmentDialog = true;
   }
 
-  onSaveAssessment() {
+  onSaveAssessment(assessment: Assessment) {
+    this.assessments.unshift(assessment);
     this.assessmentDialog = false;
     this.currentActivity = null;
   }
