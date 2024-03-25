@@ -52,8 +52,7 @@ describe('Enrollment', () => {
             .children()
             .should('have.length', 10)
             .eq(9)
-            .children()
-            .get('[data-cy="applyButton"]')
+            .find('[data-cy="applyButton"]')
             .click();
 
         cy.get('[data-cy="motivationInput"]').type(ENROLLMENT_MOTIVATION);
