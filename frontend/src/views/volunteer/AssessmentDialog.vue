@@ -13,7 +13,7 @@
                 :rules="[(v) => !!v || 'A review is required']"
                 v-model="assessment.review"
                 required
-                data-cy="motivationInput"
+                data-cy="reviewInput"
               ></v-text-field>
             </v-col>
           </v-row>
