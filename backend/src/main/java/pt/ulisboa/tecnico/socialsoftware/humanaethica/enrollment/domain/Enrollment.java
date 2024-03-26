@@ -105,6 +105,10 @@ public class Enrollment {
         }
     }
 
+    public Integer getVolunteerId(){
+        return this.volunteer.getId();
+    }
+
     public String getVolunteerName() {
         return this.volunteer.getName();
     }
