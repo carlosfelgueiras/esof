@@ -53,12 +53,14 @@ import RemoteServices from '@/services/RemoteServices';
 export default class ParticipationDialog extends Vue {
   @Model('dialog', { type: Boolean }) dialog!: boolean;
   @Prop({ type: Number, required: true }) readonly activityId!: number;
+  @Prop({ type: Number, required: true }) readonly volunteerId!: number;
 
   participation: Participation = new Participation();
 
   async onSaveParticipation() {
     if ((this.$refs.form as Vue & { validate: () => boolean }).validate()) {
       try {
+        this.participation.volunteerId = this.volunteerId;
         const result = await RemoteServices.createParticipation(
           this.activityId,
           this.participation,

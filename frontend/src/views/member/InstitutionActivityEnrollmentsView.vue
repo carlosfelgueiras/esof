@@ -45,9 +45,10 @@
       </template>
     </v-data-table>
     <participation-dialog
-      v-if="currentActivity && participationDialog"
+      v-if="currentEnrollment && participationDialog"
       v-model="participationDialog"
-      :activityId="currentActivity.id"
+      :activityId="activity.id"
+      :volunteerId="currentEnrollment?.volunteerId"
       v-on:save-participation="onSaveParticipation"
       v-on:close-participation-dialog="onCloseParticipationDialog"
     />
@@ -72,7 +73,7 @@ export default class InstitutionActivityEnrollmentsView extends Vue {
   search: string = '';
 
   participationDialog: boolean = false;
-  currentActivity: Activity | null = null;
+  currentEnrollment: Enrollment | null = null;
 
   headers: object = [
     {
@@ -128,19 +129,25 @@ export default class InstitutionActivityEnrollmentsView extends Vue {
     this.$router.push({ name: 'institution-activities' }).catch(() => {});
   }
 
-  createParticipation(activity: Activity) {
-    this.currentActivity = activity;
+  createParticipation(enrollment: Enrollment) {
+    this.currentEnrollment = enrollment;
     this.participationDialog = true;
   }
 
   onSaveParticipation() {
+    this.enrollments = this.enrollments.map((e) => {
+      if (e.id === this.currentEnrollment?.id) {
+        e.isParticipating = true;
+      }
+      return e;
+    });
     this.participationDialog = false;
-    this.currentActivity = null;
+    this.currentEnrollment = null;
   }
 
   onCloseParticipationDialog() {
     this.participationDialog = false;
-    this.currentActivity = null;
+    this.currentEnrollment = null;
   }
 
   canParticipate(enrollment: Enrollment | null, activity: Activity | null) {
