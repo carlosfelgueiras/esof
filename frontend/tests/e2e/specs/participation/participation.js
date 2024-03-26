@@ -10,9 +10,13 @@ describe('Participation', () => {
     });
 
     it('create participation', () => {
+        const PARTICIPATION_RATING = 3;
 
         // login as a member
         cy.demoMemberLogin()
+
+        // intercept create participation request
+        cy.intercept('POST', '/activities/*/participations').as('createParticipation');
 
         // intercept get activities request
         cy.intercept('GET', '/users/*/getInstitution').as('getInstitutions');
@@ -57,7 +61,38 @@ describe('Participation', () => {
             // Verify that the first enrollment of the table has the Participating column as false
             .should('contain', false)
 
-        // TODO: test the participation creation and verify it was successful
+        // Select 'Select Participant' from the first enrollment from the table
+        cy.get('[data-cy="activityEnrollmentsTable"] tbody tr')
+            .eq(0)
+            .children()
+            .eq(4)
+            .find('[data-cy="participateButton"]')
+            .click();
+
+        cy.get('[data-cy="ratingInput"]').type(PARTICIPATION_RATING)
+
+        cy.get('[data-cy="saveParticipation"]').click();
+
+        cy.wait('@createParticipation');
+
+        cy.get('[data-cy="activityEnrollmentsTable"] tbody tr')
+            .eq(0)
+            .children()
+            .eq(2)
+            // Verify that the first enrollment of the table has the Participating column as true
+            .should('contain', true)
+        
+        cy.get('[data-cy="getActivities"]').click();
+
+        cy.wait('@availableThemes');
+
+        cy.get('[data-cy="memberActivitiesTable"] tbody tr')
+            .eq(0)
+            .children()
+            .should('have.length', 13)
+            .eq(4)
+            // Verify that the first activity of the table has 2 participations
+            .should('contain', 2)
 
         cy.logout();
     });
