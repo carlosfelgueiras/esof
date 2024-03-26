@@ -76,10 +76,6 @@ public class Enrollment {
         this.volunteer.addEnrollment(this);
     }
 
-    public boolean isParticipating() {
-        return this.activity.isVolunteerParticipating(this.volunteer);
-    }
-
     private void verifyInvariants() {
         motivationIsRequired();
         enrollOnce();
@@ -103,6 +99,10 @@ public class Enrollment {
         if (this.enrollmentDateTime.isAfter(this.activity.getApplicationDeadline())) {
             throw new HEException(ENROLLMENT_AFTER_DEADLINE);
         }
+    }
+
+    public boolean isParticipating() {
+        return this.activity.isVolunteerParticipating(this.volunteer);
     }
 
     public Integer getVolunteerId(){

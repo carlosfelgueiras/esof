@@ -6,15 +6,10 @@ import pt.ulisboa.tecnico.socialsoftware.humanaethica.utils.DateHandler;
 public class EnrollmentDto {
     private Integer id;
     private String motivation;
-
     private String enrollmentDateTime;
-    
     private Integer activityId;
-    
     private String volunteerName;
-
     private Integer volunteerId;
-    
     private boolean isParticipating;
     
     public EnrollmentDto() {}
