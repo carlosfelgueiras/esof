@@ -29,7 +29,7 @@
         </v-card-title>
       </template>
       <template v-slot:[`item.action`]="{ item }">
-        <v-tooltip v-if="canParticipate(item, activity)" bottom>
+        <v-tooltip v-if="canParticipate(item)" bottom>
           <template v-slot:activator="{ on }">
             <v-icon
               class="mr-2 action-button"
@@ -150,12 +150,13 @@ export default class InstitutionActivityEnrollmentsView extends Vue {
     this.currentEnrollment = null;
   }
 
-  canParticipate(enrollment: Enrollment | null, activity: Activity | null) {
+  canParticipate(enrollment: Enrollment | null) {
     return (
       enrollment &&
-      activity &&
+      this.activity &&
       enrollment.isParticipating === false &&
-      activity.numberOfParticipations < activity.participantsNumberLimit
+      this.activity.numberOfParticipations <
+        this.activity.participantsNumberLimit
     );
   }
 }
