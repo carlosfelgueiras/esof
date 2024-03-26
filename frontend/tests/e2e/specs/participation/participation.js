@@ -40,12 +40,10 @@ describe('Participation', () => {
             .eq(4)
             // Verify that the first activity of the table has 1 participation
             .should('contain', 1)
-        
-        // Select 'Show Enrollments' from the first activity from the table
-        cy.get('[data-cy="memberActivitiesTable"] tbody tr')
-            .eq(0)
+            .parent()
             .children()
             .eq(12)
+            // Select 'Show Enrollments' from the first activity from the table
             .find('[data-cy="showEnrollments"]')
             .click(); 
 
@@ -60,12 +58,10 @@ describe('Participation', () => {
             .eq(2)
             // Verify that the first enrollment of the table has the Participating column as false
             .should('contain', false)
-
-        // Select 'Select Participant' from the first enrollment from the table
-        cy.get('[data-cy="activityEnrollmentsTable"] tbody tr')
-            .eq(0)
+            .parent()
             .children()
             .eq(4)
+            // Select 'Select Participant' from the first enrollment from the table
             .find('[data-cy="participateButton"]')
             .click();
 
