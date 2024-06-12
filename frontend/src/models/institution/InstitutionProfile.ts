@@ -40,6 +40,10 @@ export default class InstitutionProfile {
       this.assessments.forEach((assessment: Assessment) => {
         this.events.push(new InstitutionEvent(assessment));
       });
+
+      this.events.sort((a: InstitutionEvent, b: InstitutionEvent) => {
+        return ((new Date(<string>a.eventDate)) < (new Date(<string>b.eventDate))) ? 1 : -1;
+      })
     }
   }
 }
