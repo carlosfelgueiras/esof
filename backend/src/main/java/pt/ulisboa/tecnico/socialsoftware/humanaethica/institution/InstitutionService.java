@@ -12,6 +12,7 @@ import pt.ulisboa.tecnico.socialsoftware.humanaethica.exceptions.HEException;
 import pt.ulisboa.tecnico.socialsoftware.humanaethica.institution.domain.InstitutionDocument;
 import pt.ulisboa.tecnico.socialsoftware.humanaethica.institution.domain.Institution;
 import pt.ulisboa.tecnico.socialsoftware.humanaethica.institution.dto.InstitutionDto;
+import pt.ulisboa.tecnico.socialsoftware.humanaethica.institution.dto.InstitutionProfileDto;
 import pt.ulisboa.tecnico.socialsoftware.humanaethica.institution.dto.RegisterInstitutionDto;
 import pt.ulisboa.tecnico.socialsoftware.humanaethica.institution.repository.DocumentRepository;
 import pt.ulisboa.tecnico.socialsoftware.humanaethica.institution.repository.InstitutionRepository;
@@ -53,7 +54,6 @@ public class InstitutionService {
 
     @Value("${spring.mail.username}")
     private String mailUsername;
-
     @Transactional(isolation = Isolation.READ_COMMITTED)
     public List<InstitutionDto> getInstitutions() {
         return institutionRepository.findAll().stream()
@@ -167,5 +167,10 @@ public class InstitutionService {
             institutionRepository.save(institution);
             return institution;
         });
+    }
+
+    @Transactional(isolation = Isolation.READ_COMMITTED)
+    public InstitutionProfileDto getInstitutionProfile(int institutionId) {
+        return new InstitutionProfileDto(institutionRepository.findById(institutionId).orElseThrow(() -> new HEException(INSTITUTION_NOT_FOUND, institutionId)));
     }
 }

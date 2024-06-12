@@ -9,8 +9,11 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+
+import pt.ulisboa.tecnico.socialsoftware.humanaethica.institution.domain.Institution;
 import pt.ulisboa.tecnico.socialsoftware.humanaethica.institution.domain.InstitutionDocument;
 import pt.ulisboa.tecnico.socialsoftware.humanaethica.institution.dto.InstitutionDto;
+import pt.ulisboa.tecnico.socialsoftware.humanaethica.institution.dto.InstitutionProfileDto;
 import pt.ulisboa.tecnico.socialsoftware.humanaethica.institution.dto.RegisterInstitutionDto;
 
 import java.io.File;
@@ -66,5 +69,10 @@ public class InstitutionController {
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     public List<InstitutionDto>  validateInstitution(@PathVariable int institutionId) {
         return institutionService.validateInstitution(institutionId);
+    }
+
+    @GetMapping("/institution/{institutionId}")
+    public InstitutionProfileDto getInstitutionProfile(@PathVariable int institutionId) {
+        return institutionService.getInstitutionProfile(institutionId);
     }
 }

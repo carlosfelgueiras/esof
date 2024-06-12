@@ -24,6 +24,7 @@ import MemberView from '@/views/member/MemberView.vue';
 import VolunteerView from '@/views/volunteer/VolunteerView.vue';
 import InstitutionActivityEnrollmentsView from '@/views/member/InstitutionActivityEnrollmentsView.vue';
 import InstitutionAssessmentsView from '@/views/member/InstitutionAssessmentsView.vue';
+import InstitutionProfileView from '@/views/institution/InstitutionProfileView.vue';
 
 Vue.use(Router);
 
@@ -185,6 +186,15 @@ const router = new Router({
           },
         },
       ],
+    },
+    {
+      path: '/institution/:id',
+      name: 'institution-profile',
+      component: InstitutionProfileView,
+      meta: {
+        requiredAuth: 'None',
+        title: APP_NAME + ' - Institution Profile',
+      },
     },
     {
       path: '**',
