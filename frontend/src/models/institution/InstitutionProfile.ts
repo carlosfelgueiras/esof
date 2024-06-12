@@ -7,6 +7,8 @@ import InstitutionEvent from './InstitutionEvent';
 export default class InstitutionProfile {
   name!: string;
   creationDate!: string;
+  nif!: string;
+  email!: string;
 
   enrollments: Enrollment[] = [];
   participations: Participation[] = [];
@@ -18,6 +20,8 @@ export default class InstitutionProfile {
     if (jsonObj) {
       this.name = jsonObj.name;
       this.creationDate = ISOtoString(jsonObj.creationDate);
+      this.nif = jsonObj.nif
+      this.email = jsonObj.email
 
       jsonObj.enrollments.forEach((enrollment?: Enrollment) => {
         this.enrollments.push(new Enrollment(enrollment));

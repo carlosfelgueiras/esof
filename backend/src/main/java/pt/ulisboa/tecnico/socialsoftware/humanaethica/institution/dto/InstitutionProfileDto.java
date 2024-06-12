@@ -1,11 +1,8 @@
 package pt.ulisboa.tecnico.socialsoftware.humanaethica.institution.dto;
 
-import pt.ulisboa.tecnico.socialsoftware.humanaethica.assessment.domain.Assessment;
 import pt.ulisboa.tecnico.socialsoftware.humanaethica.assessment.dto.AssessmentDto;
-import pt.ulisboa.tecnico.socialsoftware.humanaethica.enrollment.domain.Enrollment;
 import pt.ulisboa.tecnico.socialsoftware.humanaethica.enrollment.dto.EnrollmentDto;
 import pt.ulisboa.tecnico.socialsoftware.humanaethica.institution.domain.Institution;
-import pt.ulisboa.tecnico.socialsoftware.humanaethica.participation.domain.Participation;
 import pt.ulisboa.tecnico.socialsoftware.humanaethica.participation.dto.ParticipationDto;
 import pt.ulisboa.tecnico.socialsoftware.humanaethica.utils.DateHandler;
 
@@ -16,6 +13,10 @@ public class InstitutionProfileDto {
     private String name;
 
     private String creationDate;
+
+    private String nif;
+
+    private String email;
 
     private List<EnrollmentDto> enrollments;
 
@@ -29,6 +30,8 @@ public class InstitutionProfileDto {
     public InstitutionProfileDto(Institution institution){
         setName(institution.getName());
         setCreationDate(DateHandler.toISOString(institution.getCreationDate()));
+        setNIF(institution.getNIF());
+        setEmail(institution.getEmail());
 
         List<EnrollmentDto> enrollments = new ArrayList<EnrollmentDto>();
         List<ParticipationDto> participations = new ArrayList<ParticipationDto>();
@@ -90,5 +93,21 @@ public class InstitutionProfileDto {
 
     public void setAssessments(List<AssessmentDto> assessments) {
         this.assessments = assessments;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getNIF() {
+        return nif;
+    }
+
+    public void setNIF(String nif) {
+        this.nif = nif;
     }
 }
