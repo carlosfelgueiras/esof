@@ -37,7 +37,13 @@
 
       <v-menu v-if="isMember" offset-y open-on-hover>
         <template v-slot:activator="{ on }">
-          <v-btn color="orange" text v-on="on" data-cy="institution">
+          <v-btn
+            color="orange"
+            text
+            v-on="on"
+            data-cy="institution"
+            to="/institution/"
+          >
             Institution
           </v-btn>
         </template>

@@ -188,6 +188,15 @@ const router = new Router({
       ],
     },
     {
+      path: '/institution/',
+      name: 'institution-profile',
+      component: InstitutionProfileView,
+      meta: {
+        requiredAuth: 'None',
+        title: APP_NAME + ' - Institution Profile',
+      },
+    },
+    {
       path: '/institution/:id',
       name: 'institution-profile',
       component: InstitutionProfileView,

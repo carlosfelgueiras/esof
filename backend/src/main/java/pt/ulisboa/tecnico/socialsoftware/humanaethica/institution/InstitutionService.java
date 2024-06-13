@@ -173,4 +173,15 @@ public class InstitutionService {
     public InstitutionProfileDto getInstitutionProfile(int institutionId) {
         return new InstitutionProfileDto(institutionRepository.findById(institutionId).orElseThrow(() -> new HEException(INSTITUTION_NOT_FOUND, institutionId)));
     }
+
+    @Transactional(isolation = Isolation.READ_COMMITTED)
+    public InstitutionProfileDto getMemberInstitutionProfile(int userId) {
+        User user = userRepository.findById(userId).orElseThrow(() -> new HEException(USER_NOT_FOUND, userId));
+        if (!(user instanceof Member)) {
+            throw new HEException(USER_NOT_FOUND, userId);
+        }
+
+        Member member = (Member) user;
+        return new InstitutionProfileDto(member.getInstitution());
+    }
 }

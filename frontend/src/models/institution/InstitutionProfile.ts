@@ -5,6 +5,7 @@ import Assessment from '../assessment/Assessment';
 import InstitutionEvent from './InstitutionEvent';
 
 export default class InstitutionProfile {
+  id!: number;
   name!: string;
   creationDate!: string;
   nif!: string;
@@ -18,10 +19,11 @@ export default class InstitutionProfile {
 
   constructor(jsonObj?: InstitutionProfile) {
     if (jsonObj) {
+      this.id = jsonObj.id;
       this.name = jsonObj.name;
       this.creationDate = ISOtoString(jsonObj.creationDate);
-      this.nif = jsonObj.nif
-      this.email = jsonObj.email
+      this.nif = jsonObj.nif;
+      this.email = jsonObj.email;
 
       jsonObj.enrollments.forEach((enrollment?: Enrollment) => {
         this.enrollments.push(new Enrollment(enrollment));
@@ -46,8 +48,10 @@ export default class InstitutionProfile {
       });
 
       this.events.sort((a: InstitutionEvent, b: InstitutionEvent) => {
-        return ((new Date(<string>a.eventDate)) < (new Date(<string>b.eventDate))) ? 1 : -1;
-      })
+        return new Date(<string>a.eventDate) < new Date(<string>b.eventDate)
+          ? 1
+          : -1;
+      });
     }
   }
 }

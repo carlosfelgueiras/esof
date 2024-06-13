@@ -353,6 +353,17 @@ export default class RemoteServices {
       });
   }
 
+  static async getMemberInstitutionProfile(): Promise<InstitutionProfile> {
+    return httpClient
+      .get('/institution/')
+      .then((response) => {
+        return new InstitutionProfile(response.data);
+      })
+      .catch(async (error) => {
+        throw Error(await this.errorMessage(error));
+      });
+  }
+
   static async getInstitution(userId: number): Promise<Institution> {
     return httpClient
       .get(`/users/${userId}/getInstitution`)
