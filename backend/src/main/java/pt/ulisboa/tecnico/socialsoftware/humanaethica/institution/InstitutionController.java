@@ -32,7 +32,6 @@ public class InstitutionController {
     private String figuresDir;
 
     @GetMapping("/institutions")
-    @PreAuthorize("hasRole('ROLE_ADMIN')")
     public List<InstitutionDto> getInstitutions() {
         return institutionService.getInstitutions();
     }

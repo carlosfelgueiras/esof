@@ -25,6 +25,7 @@ import VolunteerView from '@/views/volunteer/VolunteerView.vue';
 import InstitutionActivityEnrollmentsView from '@/views/member/InstitutionActivityEnrollmentsView.vue';
 import InstitutionAssessmentsView from '@/views/member/InstitutionAssessmentsView.vue';
 import InstitutionProfileView from '@/views/institution/InstitutionProfileView.vue';
+import InstitutionListView from './views/institution/InstitutionListView.vue';
 
 Vue.use(Router);
 
@@ -203,6 +204,15 @@ const router = new Router({
       meta: {
         requiredAuth: 'None',
         title: APP_NAME + ' - Institution Profile',
+      },
+    },
+    {
+      path: '/list-institutions',
+      name: 'institution-list',
+      component: InstitutionListView,
+      meta: {
+        requiredAuth: 'None',
+        title: APP_NAME + ' - Institution List',
       },
     },
     {

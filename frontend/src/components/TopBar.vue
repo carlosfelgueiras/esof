@@ -20,6 +20,20 @@
 
       <v-spacer />
 
+      <v-menu offset-y sopen-on-hover>
+        <template v-slot:activator="{ on }">
+          <v-btn
+            text
+            color="orange"
+            v-on="on"
+            data-cy="institutionsList"
+            @click="listInstitutions"
+          >
+            Search Institutions
+          </v-btn>
+        </template>
+      </v-menu>
+
       <v-menu v-if="isVolunteer" offset-y sopen-on-hover>
         <template v-slot:activator="{ on }">
           <v-btn
@@ -314,6 +328,10 @@ export default class TopBar extends Vue {
 
   async volunteerActivities() {
     await this.$router.push({ name: 'volunteer-activities' }).catch(() => {});
+  }
+
+  async listInstitutions() {
+    await this.$router.push({ name: 'institution-list' }).catch(() => {});
   }
 
   async logout() {
